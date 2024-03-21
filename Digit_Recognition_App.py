@@ -11,20 +11,21 @@ from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
-# Load the MNIST dataset
+
 mnist = fetch_openml('mnist_784', version=1, cache=True, as_frame=False)
 X = mnist["data"]
 y = mnist["target"].astype(np.uint8)
 
-# Split the dataset into training and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/7, random_state=42)
 
-# Train the SVM model
 svm_model = SVC()
 svm_model.fit(X_train, y_train)
 
-# Define a function to preprocess the image
+
+# Preprocess the image
+
 def preprocess_image(image):
+    
     # Convert to grayscale
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     
@@ -46,7 +47,8 @@ st.title('MNIST Digit Predictor')
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
-    # To read image file buffer with OpenCV
+    
+    # Read image file buffer with OpenCV
     bytes_data = uploaded_file.getvalue()
     cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
     
@@ -60,8 +62,6 @@ if uploaded_file is not None:
     if st.button('Predict'):
         prediction = svm_model.predict([processed_img])
         st.write(f'Predicted digit: {prediction[0]}')
-
-# Run this app with `streamlit run app.py` in your command line
 
 
 # In[ ]:
