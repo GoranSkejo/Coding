@@ -21,6 +21,7 @@
     "from sklearn.svm import SVC\n",
     "import numpy as np\n",
     "import pandas as pd\n",
+    "st.set_option('server.port', 8501)",
     "\n",
     "# Load the MNIST dataset\n",
     "mnist = fetch_openml('mnist_784', version=1, cache=True, as_frame=False)\n",
